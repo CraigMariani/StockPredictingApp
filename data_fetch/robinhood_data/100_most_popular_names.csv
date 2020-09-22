@@ -1,0 +1,101 @@
+,TickerLabel,Name
+0,CPRX,Catalyst Pharmaceuticals
+1,CRBP,Corbus Pharmaceuticals
+2,BABA,Alibaba
+3,SNE,Sony
+4,APHA,Aphria
+5,GOOGL,Alphabet Class A
+6,MSFT,Microsoft
+7,AMZN,Amazon
+8,NRZ,New Residential Investment
+9,PTON,Peloton Interactive
+10,PYPL,PayPal
+11,NKE,Nike
+12,V,Visa
+13,UBER,Uber
+14,GM,GM
+15,FB,Facebook
+16,KO,Coca-Cola
+17,MRNA,Moderna
+18,NVDA,NVIDIA
+19,PLUG,Plug Power
+20,TXMD,TherapeuticsMD
+21,ZNGA,Zynga
+22,WMT,Walmart
+23,JNJ,Johnson & Johnson
+24,NTDOY,Nintendo
+25,DKNG,Draftkings
+26,ET,Energy Transfer
+27,PENN,Penn National Gaming
+28,GE,GE
+29,JPM,JPMorgan Chase
+30,DIS,Disney
+31,NFLX,Netflix
+32,AZN,AstraZeneca
+33,AAPL,Apple
+34,LYFT,Lyft
+35,BP,British Petroleum
+36,SNAP,Snap
+37,LUV,Southwest Airlines
+38,NOK,Nokia
+39,DAL,Delta Air Lines
+40,BAC,Bank of America
+41,PFE,Pfizer
+42,WORK,Slack
+43,SIRI,Sirius XM
+44,NIO,NIO
+45,ZM,Zoom
+46,SBUX,Starbucks
+47,AMD,AMD
+48,SQ,Square
+49,SAVE,Spirit Airlines
+50,HAL,Halliburton
+51,KOS,Kosmos Energy
+52,BA,Boeing
+53,GILD,Gilead Sciences
+54,UAL,United Airlines
+55,BRK.B,Berkshire Hathaway
+56,NCLH,Norwegian Cruise Line
+57,INTC,Intel
+58,T,AT&T
+59,RCL,Royal Caribbean Group
+60,MRO,Marathon Oil
+61,RKT,Rocket Companies
+62,INO,Inovio
+63,JBLU,JetBlue Airways
+64,WFC,Wells Fargo
+65,CRON,Cronos Group
+66,CGC,Canopy Growth
+67,MGM,MGM Resorts
+68,TSLA,Tesla
+69,ACB,Aurora Cannabis
+70,AAL,American Airlines
+71,BYND,Beyond Meat
+72,TWTR,Twitter
+73,F,Ford Motor
+74,GPRO,GoPro
+75,MFA,MFA Financial
+76,PLAY,Dave & Buster's
+77,GPS,Gap
+78,XOM,Exxon Mobil
+79,TLRY,Tilray
+80,CCL,Carnival
+81,FIT,Fitbit
+82,NKLA,Nikola
+83,AMC,AMC Entertainment
+84,SPCE,Virgin Galactic Holdings
+85,VOO,Vanguard S&P 500 ETF
+86,GUSH,Direxion Daily S&P Oil & Gas Exp. & Prod. Bull 2X Shares
+87,WKHS,Workhorse
+88,USO,United States Oil Fund
+89,IVR,Invesco Mortgage Capital
+90,SPY,SPDR S&P 500 ETF
+91,UCO,ProShares Ultra Bloomberg Crude Oil ETF
+92,VSLR,Vivint Solar
+93,IBIO,iBio
+94,SPHD,PowerShares S&P 500 High Dividend Low Volatility ETF
+95,PSEC,Prospect Capital
+96,KODK,Kodak
+97,SRNE,Sorrento Therapeutics
+98,FCEL,FuelCell Energy
+99,NVAX,Novavax

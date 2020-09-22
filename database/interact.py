@@ -13,11 +13,17 @@ from stock_database import Database
 if __name__ == '__main__':
     db = Database()
 
-    # db.create_table()
 
-    # db.show_tables()
-    
+    # for closed price table (100_most_popular)
+    # db.drop_table()
+    # db.create_table()
+    # db.insert_contents()
+    db.show_tables()
     db.show_contents()
 
+    # for names table (ticker_names)
+    # db.create_name_table()
+    # db.insert_name_contents()
 
-    # db.insert_contents()
+
+    

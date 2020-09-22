@@ -7,6 +7,7 @@ actual data = 100_most_popular_cleaned.csv
 '''
 
 import pymysql
+# import mysql
 import pandas as pd
 from sqlalchemy import create_engine
 import pprint
@@ -19,17 +20,22 @@ class Database:
         # reading in csv file of stock data
         df = pd.read_csv('../data_fetch/robinhood_data/100_most_popular_cleaned.csv')
 
+        # reading in csv file of stock ticker names
+        df_names = pd.read_csv('../data_fetch/robinhood_data/100_most_popular_names.csv')
+        df_names.drop(columns=['Unnamed: 0'], inplace=True)
         userName = None
         passWord = None
 
         # get login in info for database
-        with open('../../LoginCredentials/mysql.txt') as f:
+        with open('../../LoginCredentials/mysql3.txt') as f:
             file = f.readlines()
             userName = file[0].split('\n')[0]
             passWord = file[1].split('\n')[0]
 
         # create mysql connection to database with login info
-        conn = pymysql.connect(host='localhost', 
+        conn = pymysql.connect(
+                                # host="""%admin""",
+                                host='localhost', 
                                 user=userName, 
                                 password=passWord, 
                                 db='stock_app')
@@ -50,6 +56,7 @@ class Database:
         self.mycursor = mycursor # the cursor
         self.conn = conn # the connection
         self.df = df # stock data in dataframe
+        self.df_names = df_names # tickers with names
 
     # creat the table for stock app
     def create_table(self):
@@ -88,6 +95,7 @@ class Database:
         self.mycursor.execute( self.conn.escape_string(str(sql)))
         self.conn.commit()
     
+    
     # look into adding grayscale trust stocks and moderna
     def insert_contents(self):
         df = self.df
@@ -108,12 +116,54 @@ class Database:
         df.columns = cols_list 
         df.to_sql('100_most_popular', con=engine, if_exists='append', index=False)
 
+    # ticker_name table ###############################################
+    # def create_name_table(self):
+    #     df_names = self.df_names
+
+    #     # print(df_names.columns)
+    #     ticker_symbols = df_names.columns[0]
+    #     ticker_names = df_names.columns[1]
         
+    #     # print(ticker_symbols)
+    #     # print(ticker_names)
+    #     sql = '''CREATE TABLE ticker_names( 
+    #         symbols VARCHAR(8),
+    #         names VARCHAR(8)
+    #         )'''
+        
+    #     self.mycursor.execute(sql)
+    #     self.conn.commit()
     
+    # def insert_name_contents(self):
+    #     df_names = self.df_names
+    #     engine = self.engine
+    #     mycursor = self.mycursor
+    #     conn = self.conn
+        
+
+    #     ticker_list = []
+
+    #     # some tickers have periods in their names, formatting it so they are no longer there
+    #     for ticker in df_names['TickerLabel'].tolist():
+    #         if '.' in ticker:
+    #             ticker_list = ticker.split('.')
+    #             ticker = ticker_list[1]
+            
+    #         ticker_list.append(ticker)
+
+    #     df_names['TickerLabel'] = ticker_list
+    #     df_names.to_sql('ticker_names', con=engine, if_exists='append', index=False)
+    #######################################################################
     
+     
     def drop_table(self):
-        pass
-    
+        self.mycursor.execute('DROP TABLE `100_most_popular`')
+        self.conn.commit()
+
+    def delete_contents(self):
+        self.mycursor.execute('DELETE FROM `100_most_popular`')
+        self.conn.commit()
+
     def show_tables(self):
         self.mycursor.execute('SHOW TABLES;')
         # self.conn.commit()
@@ -126,3 +176,15 @@ class Database:
         # self.conn.commit()
         for i in self.mycursor.fetchall():
             print(i)
+
+    # returns contents in pandas dataframe
+    def return_contents(self):
+        
+        df2 = pd.read_sql('SELECT * FROM 100_most_popular', con=self.conn)
+        df2['Date'] = pd.to_datetime(df2['Date'])
+        for col in df2.columns[1:]:
+            df2[col] = df2[col].astype(float)
+        # print(df2.info())
+        # print(df2.head())
+        return df2
+        

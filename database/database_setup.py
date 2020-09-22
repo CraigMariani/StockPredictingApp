@@ -27,6 +27,8 @@ class Database:
             userName = file[0].split('\n')[0]
             passWord = file[1].split('\n')[0]
 
+        print(userName)
+        print(passWord)
 
         conn = pymysql.connect(host='localhost', 
                                 user=userName, 
