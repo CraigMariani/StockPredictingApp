@@ -25,6 +25,9 @@ if __name__ == '__main__':
     # db.create_name_table()
     # db.insert_name_contents()
 
+    # for most recent table (most_recent)
+    db.get_most_recent()
+
     # db.show_tables()
 
 

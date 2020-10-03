@@ -8,11 +8,15 @@ actual data = 100_most_popular_cleaned.csv
 
 import pymysql
 # import mysql
+import numpy as np
 import pandas as pd
 from sqlalchemy import create_engine
 import pprint
 import datetime
 
+
+global first_day
+global last_day
 class Database:
 
     def __init__(self):
@@ -57,6 +61,12 @@ class Database:
         self.conn = conn # the connection
         self.df = df # stock data in dataframe
         self.df_names = df_names # tickers with names
+
+        
+        self.first_day = df['Date'].iloc[0]
+        self.last_day = df['Date'].iloc[-1]
+        
+        
 
     # creat the table for stock app
     def create_table(self):
@@ -117,22 +127,22 @@ class Database:
         df.to_sql('100_most_popular', con=engine, if_exists='append', index=False)
 
     # ticker_name table ###############################################
-    def create_name_table(self):
-        df_names = self.df_names
+    # def create_name_table(self):
+    #     df_names = self.df_names
 
-        # print(df_names.columns)
-        ticker_symbols = df_names.columns[0]
-        ticker_names = df_names.columns[1]
+    #     # print(df_names.columns)
+    #     ticker_symbols = df_names.columns[0]
+    #     ticker_names = df_names.columns[1]
         
-        # print(ticker_symbols)
-        # print(ticker_names)
-        sql = '''CREATE TABLE ticker_names( 
-            symbols VARCHAR(8),
-            names VARCHAR(8)
-            )'''
+    #     # print(ticker_symbols)
+    #     # print(ticker_names)
+    #     sql = '''CREATE TABLE ticker_names( 
+    #         symbols VARCHAR(8),
+    #         names VARCHAR(8)
+    #         )'''
         
-        self.mycursor.execute(sql)
-        self.conn.commit()
+    #     self.mycursor.execute(sql)
+    #     self.conn.commit()
         
     # for populating the ticker name table
     # def insert_name_contents(self):
@@ -156,7 +166,37 @@ class Database:
     #     df_names['TickerLabel'] = ticker_list
     #     df_names.to_sql('ticker_names', con=engine, if_exists='append', index=False)
     #######################################################################
+    # for getting the most recent data table (50 most recent days)
+    def get_most_recent(self):
+
+        # returning the most rcent
+        # df = pd.read_sql('SELECT * FROM `100_most_popular` ORDER BY  Date DESC LIMIT 365', con=self.conn)
+        df = pd.read_sql('SELECT * FROM `100_most_popular` ORDER BY  Date DESC', con=self.conn)   
+
+        df = df.iloc[::-1]
+        
+
+        last_day = df['Date'].iloc[-1]
+        # last_day = int(last_day)
+        # print(type(last_day))
+
+        first_day = df['Date'].iloc[0]
+        # first_day = int(first_day)
+        # print(type(first_day))
+
+        df['Date'] = np.arange(1,len(df['Date']) + 1)
+        
+        for col in df.columns[1:]:
+            df[col] = df[col].astype(float)
+
+        # return df, first_day, last_day
+
+        
+        return df
     
+    def get_dates(self):
+        return self.first_day, self.last_day
+    ######################################################################
      
     def drop_table(self):
         self.mycursor.execute('DROP TABLE `100_most_popular`')
@@ -174,8 +214,8 @@ class Database:
     
 
     def show_contents(self):
-        # self.mycursor.execute('SELECT * FROM 100_most_popular')
-        self.mycursor.execute('SELECT * FROM ticker_names')
+        self.mycursor.execute('SELECT * FROM 100_most_popular')
+        # self.mycursor.execute('SELECT * FROM ticker_names')
         # self.conn.commit()
         for i in self.mycursor.fetchall():
             print(i)
