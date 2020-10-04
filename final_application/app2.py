@@ -79,7 +79,7 @@ class Application():
         st.sidebar.text('Stock ten days ahead')
         df_future = pd.DataFrame({ 'Future Days' : future_days, 'Future Closed Prices' :  future_closed_prices })
         st.sidebar.text(df_future)
-        
+
         date_train, date_test, close_train, close_test = re.get_train_test_data()
         
         return close_out, date_test
@@ -122,7 +122,16 @@ class Application():
         df_original = pd.DataFrame({ 'Day' : df['Date'], 'Original' : df[ticker_selected]})
         df_original.set_index('Day')
         
-        return df_original, df_predicted        
+        return df_original, df_predicted
+
+    def show_learning_curves(self, ticker_selected, n):
+        re = Regression(ticker_selected, n)
+
+        train_errors, val_errors = re.learning_curves(n)
+
+        df_errors = pd.DataFrame({ 'Train Errors ' : np.sqrt(train_errors), 'Val Errors' : val_errors})
+
+        st.line_chart(data=df_errors, width=800, height=300)
 
 
 
@@ -145,6 +154,9 @@ if __name__ == '__main__':
     labels = ['Original', 'Predicted']
     
     ap.plot_dfs(dfs, labels)
+    
+    if st.sidebar.checkbox('Show Learning Curves'):
+        ap.show_learning_curves(ticker_selected, n)
 
 
     

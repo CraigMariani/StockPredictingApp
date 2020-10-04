@@ -38,10 +38,6 @@ class Regression():
     def __init__(self, ticker_selected, n):
         db = Database()
 
-        # df, first_day, last_day = db.get_most_recent() # accessing the databse getting the most recent records
-        # print(type(first_day))
-        # print(type(last_day))
-
         df = db.get_most_recent()
 
         # preprocessing the date and the selected data int matricies 
@@ -58,11 +54,8 @@ class Regression():
         self.date_test = date_test
         self.close_test = close_test
 
-        # self.first_day = first_day
-        # self.last_day = last_day
-
         # creating model 
-        poly_model = make_pipeline(PolynomialFeatures(n), Ridge())     
+        poly_model = make_pipeline(PolynomialFeatures(n), Ridge())
 
         self.poly_model = poly_model
         self.date = date
@@ -123,7 +116,27 @@ class Regression():
         # y true - y predicted  
         # the output is in closed price, this determines how accurate the predicted price is
         return r2_score(close_test, close_out)
+    
+    # plot the learning curves of the model using mean squared error
+    def learning_curves(self, n):
+        # creating model 
+        poly_model = make_pipeline(PolynomialFeatures(n), Ridge())
 
-    def learning_cruves(self):
-        pass
+        date_val = self.date_test
+        date_train = self.date_train
+        close_val = self.close_test
+        close_train = self.close_train
+
+        train_errors, val_errors = [], []
+
+        for m in range(1, len(date_train)):
+            poly_model.fit(date_train[:m], close_train[:m])
+
+            close_train_predict = poly_model.predict(date_train[:m])
+            close_val_predict = poly_model.predict(date_val)
+
+            train_errors.append(mean_squared_error(close_train[:m], close_train_predict))
+            val_errors.append(mean_squared_error(close_val, close_val_predict))
+
+        return train_errors, val_errors
 
