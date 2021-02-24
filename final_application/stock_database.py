@@ -170,7 +170,7 @@ class Database:
     def get_most_recent(self):
 
         # returning the most rcent
-        # df = pd.read_sql('SELECT * FROM `100_most_popular` ORDER BY  Date DESC LIMIT 365', con=self.conn)
+        # df = pd.read_sql('SELECT * FROM `100_most_popular` ORDER BY  Date DESC LIMIT 37', con=self.conn)
         df = pd.read_sql('SELECT * FROM `100_most_popular` ORDER BY  Date DESC', con=self.conn)   
 
         df = df.iloc[::-1]
